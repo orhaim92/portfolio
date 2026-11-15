@@ -72,7 +72,7 @@ export const jobs: Job[] = [
     role: "Team Leader",
     period: "2018 – Nov 2020",
     points: [
-      "Joined as a full stack developer (React, .NET Web API) and was promoted to team leader of 6 developers on backend and frontend projects (60-40 hands-on): code review, mentoring, task management.",
+      "Led 6 developers on backend and frontend projects in React and .NET Web API (60-40 hands-on): code review, mentoring, task management.",
       "Delivered new products, including Ynet Nadlan, and group-wide systems for Ynet, Calcalist and Yedioth Ahronoth.",
     ],
   },
@@ -92,7 +92,8 @@ export const jobs: Job[] = [
     note: "A platform that connects dental imaging centers with dental clinics.",
     points: [
       "Co-founded it and build the product in my own time as a full stack engineer (Angular, AWS Lambda, PostgreSQL, AWS CDK, Python).",
-      "Work with the team to bring AI into the clinic's daily work, helping dentists spot problems and get answers faster (Claude, computer vision models).",
+      "Built several AI systems for dental imaging, hands-on, from idea to production.",
+      "Among them: a system that generates a panoramic view from DICOM scans, and a system that recommends dental treatments from the patient's images.",
     ],
   },
 ];
