@@ -53,21 +53,12 @@ export type Job = { company: string; role: string; period: string; note?: string
 
 export const jobs: Job[] = [
   {
-    company: "DentAI",
-    role: "Co-Founder & Founding Engineer",
-    period: "2025 – Present",
-    note: "A platform that connects dental imaging centers with dental clinics.",
-    points: [
-      "Co-founded the company and build the product hands-on as a full stack engineer (Angular, AWS Lambda, PostgreSQL, AWS CDK, Python).",
-      "Work with the team to bring AI into the clinic's daily work, helping dentists spot problems and get answers faster (Claude, computer vision models).",
-    ],
-  },
-  {
     company: "Bioforum (BionData)",
     role: "Head of Technology",
     period: "Nov 2020 – 2026",
     note: "BionData is a subsidiary of Bioforum. Its JET cloud platform helps pharma companies get their clinical trial data ready for regulators, much faster than before. Joined as Senior Full Stack Developer.",
     points: [
+      "Managed a team of 6 developers: planning, mentoring, code review and delivery from requirements to release.",
       "Led the company's technology end to end, including its AI adoption: architecture, delivery, cloud and production, and took part in management decisions on product direction.",
       "Delivered AI and platform features in a regulated clinical-data environment, with a full audit trail and regular customer audits.",
       "Built a multi-agent assistant: a supervisor routes each request to a documentation (RAG) agent or a data agent, which works with the customer's live data under the user's own permissions.",
@@ -79,20 +70,29 @@ export const jobs: Job[] = [
   {
     company: "YIT (ynet)",
     role: "Team Leader",
-    period: "Jan 2019 – Nov 2020",
+    period: "2018 – Nov 2020",
     points: [
-      "Led 6 developers on backend and frontend projects (60-40 hands-on): code review, mentoring, task management.",
+      "Joined as a full stack developer (React, .NET Web API) and was promoted to team leader of 6 developers on backend and frontend projects (60-40 hands-on): code review, mentoring, task management.",
       "Delivered new products, including Ynet Nadlan, and group-wide systems for Ynet, Calcalist and Yedioth Ahronoth.",
     ],
   },
   {
     company: "Earlier roles",
     role: "Full Stack Developer",
-    period: "2014 – 2019",
+    period: "2014 – 2018",
     points: [
-      "YIT (ynet), Full Stack Developer, 2018–2019: commercial sites in React and .NET Web API.",
       "Daka90, Full Stack Developer, 2015–2018: tourism web systems (ASP.NET MVC, C#, React, Oracle).",
       "ERG Solutions, .NET Developer, 2014–2015: financial systems on site at Manpower Israel.",
+    ],
+  },
+  {
+    company: "DentAI",
+    role: "Co-Founder, side project",
+    period: "2025 – Present, evenings",
+    note: "A platform that connects dental imaging centers with dental clinics.",
+    points: [
+      "Co-founded it and build the product in my own time as a full stack engineer (Angular, AWS Lambda, PostgreSQL, AWS CDK, Python).",
+      "Work with the team to bring AI into the clinic's daily work, helping dentists spot problems and get answers faster (Claude, computer vision models).",
     ],
   },
 ];
