@@ -1,26 +1,284 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #070a12;
+  --panel: #0d1220;
+  --panel-2: #121930;
+  --line: #1f2942;
+  --text: #e8ecf6;
+  --muted: #93a0bd;
+  --accent: #5ee6c8;
+  --accent-2: #8b7cff;
+  --warn: #ffb454;
+  --bad: #ff6b81;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-panel-2: var(--panel-2);
+  --color-line: var(--line);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-warn: var(--warn);
+  --color-bad: var(--bad);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-display);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+/* Cards that slide in from the side start outside the page edge. Clip them so they never cause a sideways scrollbar. */
+main,
+footer {
+  overflow-x: clip;
+}
+
+/* Soft grid and glow behind the whole page. */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60rem 40rem at 85% -10%, rgb(139 124 255 / 0.16), transparent 60%),
+    radial-gradient(50rem 36rem at 0% 10%, rgb(94 230 200 / 0.1), transparent 60%),
+    linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 100% 56px,
+    linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 56px 100%;
+  mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 100%);
+  opacity: 0.55;
+}
+
+.gradient-text {
+  background: linear-gradient(100deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.card {
+  background: linear-gradient(180deg, rgb(18 25 48 / 0.85), rgb(13 18 32 / 0.85));
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+}
+
+/* ---- Diagram ---- */
+.flow-line {
+  stroke: var(--line);
+  stroke-width: 2;
+  fill: none;
+}
+.flow-live {
+  stroke: url(#flowGrad);
+  stroke-width: 2;
+  fill: none;
+  stroke-dasharray: 6 10;
+  animation: dash 1.4s linear infinite;
+}
+@keyframes dash {
+  to {
+    stroke-dashoffset: -32;
+  }
+}
+.node-pulse {
+  animation: pulse 2.6s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0;
+    transform: scale(1.12);
+  }
+}
+
+/* ---- Live system ---- */
+.stage {
+  transition:
+    border-color 0.25s,
+    box-shadow 0.25s,
+    background 0.25s;
+}
+.stage[data-status="running"] {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), 0 0 28px rgb(94 230 200 / 0.25);
+}
+.stage[data-status="done"] {
+  border-color: rgb(94 230 200 / 0.45);
+}
+.stage[data-status="blocked"] {
+  border-color: var(--bad);
+  box-shadow: 0 0 24px rgb(255 107 129 / 0.2);
+}
+.spawn {
+  animation: spawn 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+}
+@keyframes spawn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.spin {
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.caret::after {
+  content: "▍";
+  margin-left: 2px;
+  animation: blink 1s steps(2) infinite;
+  color: var(--accent);
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* The opening screen fills exactly one viewport under the sticky header. */
+.hero {
+  min-height: calc(100svh - 3.5rem);
+}
+.hero-title {
+  /* Scales with the smaller of width and height, so it never pushes the buttons off screen. */
+  font-size: clamp(2.5rem, min(7.2vw, 9.4svh), 5.6rem);
+}
+
+/* Short screens (small laptops, small phones): tighten the opening screen so it still fits. */
+@media (max-height: 760px) {
+  .hero {
+    padding-block: 1rem;
+  }
+  .hero-avatar {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  .hero-tag {
+    margin-top: 1rem;
+  }
+  .hero-title {
+    margin-top: 0.5rem;
+    font-size: clamp(1.75rem, min(6.4vw, 8.4svh), 5.6rem);
+  }
+  .hero-sum {
+    margin-top: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .hero-cta {
+    margin-top: 1rem;
+    gap: 0.5rem;
+  }
+  .hero-cta a {
+    padding-block: 0.55rem;
+  }
+}
+
+/* ---- Entrances ---- */
+.display {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.display em {
+  font-style: italic;
+}
+.rise {
+  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: opacity, transform;
+}
+.reveal[data-from="left"] {
+  transform: translateX(-36px);
+}
+.reveal[data-from="right"] {
+  transform: translateX(36px);
+}
+.reveal[data-from="scale"] {
+  transform: scale(0.94);
+}
+.reveal[data-in="true"] {
+  opacity: 1;
+  transform: none;
+}
+.card {
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease;
+}
+.lift:hover {
+  transform: translateY(-4px);
+  border-color: rgb(94 230 200 / 0.5);
+}
+.step-line {
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 1.4s cubic-bezier(0.2, 0.7, 0.2, 1) 0.2s;
+}
+.reveal[data-in="true"] .step-line {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .reveal,
+  .step-line {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    transition: none;
+    filter: none;
+  }
+  .flow-live,
+  .node-pulse,
+  .spawn,
+  .spin,
+  .caret::after {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }
