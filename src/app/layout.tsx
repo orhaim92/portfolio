@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { Backdrop } from "@/components/Backdrop";
+import { VisitBeacon } from "@/components/VisitBeacon";
 import { person } from "@/content/profile";
 import "./globals.css";
 
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <style>{`.reveal,.rise{opacity:1!important;transform:none!important;animation:none!important}`}</style>
         </noscript>
         <Backdrop />
+        <VisitBeacon />
         {children}
       </body>
     </html>

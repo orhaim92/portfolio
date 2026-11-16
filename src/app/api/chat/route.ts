@@ -3,6 +3,7 @@ import { runDemo } from "@/lib/agents/demo";
 import { MAX_QUESTION_CHARS, sanitize } from "@/lib/agents/guard";
 import { checkLimits } from "@/lib/agents/memory";
 import { runPipeline } from "@/lib/agents/pipeline";
+import { describeVisitor, notify } from "@/lib/notify";
 import type { StreamEvent } from "@/lib/agents/types";
 
 export const runtime = "nodejs";
@@ -67,6 +68,10 @@ export async function POST(req: Request): Promise<Response> {
       429,
     );
   }
+
+  // Tell the site owner someone is asking. The question is sent to the phone only, never back into a prompt.
+  void notify("Portfolio chat question", `${question}
+${describeVisitor(req.headers)}`, ["speech_balloon"]);
 
   const live = Boolean(process.env.ANTHROPIC_API_KEY);
   const started = Date.now();
